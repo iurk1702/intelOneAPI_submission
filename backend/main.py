@@ -22,9 +22,11 @@ app = FastAPI(
 )
 
 # CORS configuration
-cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:8080").split(",")
-# Clean up any whitespace
-cors_origins = [origin.strip() for origin in cors_origins]
+cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:8080")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",") if origin.strip()]
+# Allow all Vercel preview deployments if CORS_ORIGINS is not set or empty
+if not cors_origins or cors_origins == [""]:
+    cors_origins = ["http://localhost:5173", "http://localhost:8080"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
