@@ -22,17 +22,29 @@ app = FastAPI(
 )
 
 # CORS configuration
-cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:8080")
+cors_origins_str = os.getenv("CORS_ORIGINS", "")
 cors_origins = [origin.strip() for origin in cors_origins_str.split(",") if origin.strip()]
-# Allow all Vercel preview deployments if CORS_ORIGINS is not set or empty
-if not cors_origins or cors_origins == [""]:
-    cors_origins = ["http://localhost:5173", "http://localhost:8080"]
+
+# Add default localhost origins for development
+default_origins = ["http://localhost:5173", "http://localhost:8080", "http://localhost:3000"]
+
+# Combine user-provided origins with defaults
+if cors_origins:
+    all_origins = list(set(cors_origins + default_origins))
+else:
+    all_origins = default_origins
+
+# If ALLOW_ALL_ORIGINS is set to "true", allow all origins (for development/testing)
+# Note: This disables credentials for security
+allow_all = os.getenv("ALLOW_ALL_ORIGINS", "false").lower() == "true"
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=["*"] if allow_all else all_origins,
+    allow_credentials=not allow_all,  # Can't use credentials with "*"
+    allow_methods=["GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Initialize model loader
