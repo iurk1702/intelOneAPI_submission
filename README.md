@@ -5,8 +5,6 @@ Machine Learning system for predicting asylum acceptance rates using XGBoost, Ra
 ## 🌐 Live Deployment
 
 - **Frontend**: [https://refugee-insights-frontend-odpdwqv0x.vercel.app/](https://refugee-insights-frontend-odpdwqv0x.vercel.app/)
-- **Backend API**: [https://inteloneapi-submission.onrender.com](https://inteloneapi-submission.onrender.com)
-- **API Documentation**: [https://inteloneapi-submission.onrender.com/docs](https://inteloneapi-submission.onrender.com/docs)
 
 ## 📊 Project Overview
 
@@ -91,26 +89,7 @@ npm run dev
 
 The frontend will be available at `http://localhost:5173`
 
-## 📖 API Usage
-
-### Health Check
-
-```bash
-curl https://inteloneapi-submission.onrender.com/health
-```
-
-### Make a Prediction
-
-```bash
-curl -X POST https://inteloneapi-submission.onrender.com/predict \
-  -H "Content-Type: application/json" \
-  -d '{
-    "origin": "Syria",
-    "asylum": "Germany",
-    "year": "2015",
-    "procedure": "Government"
-  }'
-```
+## 📖 API
 
 **Response:**
 ```json
@@ -119,12 +98,6 @@ curl -X POST https://inteloneapi-submission.onrender.com/predict \
   "confidence": 12.4
 }
 ```
-
-### API Documentation
-
-Interactive API documentation is available at:
-- Swagger UI: https://inteloneapi-submission.onrender.com/docs
-- ReDoc: https://inteloneapi-submission.onrender.com/redoc
 
 ## 🧪 Model Performance
 
@@ -178,7 +151,6 @@ Interactive API documentation is available at:
 
 - [Deployment Guide](DEPLOYMENT_GUIDE.md) - Complete deployment instructions
 - [Testing Guide](TESTING_GUIDE.md) - End-to-end testing instructions
-- [Backend README](backend/README.md) - Detailed backend documentation
 
 ## 🎯 Use Cases
 
